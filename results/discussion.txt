@@ -1,0 +1,31 @@
+INTERPRETATION AND DISCUSSION
+============================================================
+* Lowest mean MASE: Naive (0.827). Ranking: Naive 0.827, SES 0.827, ARIMA 0.851, Holt 0.880.
+* DM vs naive: ARIMA beat naive in 3/12 cells (SES 0, Holt 0).
+* AIC vs BIC: mean MASE 0.851 (BIC) vs 0.872 (AIC) across cells; orders differed in 9/12.
+* Spearman rho=0.32 (p=0.304): MASE tended to increase (not significant) with window length.
+* Representative (BANKNIFTY 5d): Ljung-Box p=0.000, Jarque-Bera p=0.000, 95% PI coverage 97.4%.
+* Representative bootstrap 95% CI for MASE: ARIMA [0.690, 0.860] vs Naive [0.675, 0.847] (see bootstrap_cis.csv for all cells/metrics).
+
+PRACTICAL INTERPRETATION
+============================================================
+* Volatility forecasts drive Value-at-Risk / expected shortfall, option pricing (realized vs implied vol), volatility-targeting position sizing, and margin. Matching only a naive persistence forecast still supports risk MEASUREMENT but offers no directional edge.
+
+REFERENCES
+============================================================
+* Mandelbrot, B. (1963). The Variation of Certain Speculative Prices. Journal of Business, 36(4), 394-419.
+* Engle, R. F. (1982). Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. Econometrica, 50(4), 987-1007.
+* Bollerslev, T. (1986). Generalized Autoregressive Conditional Heteroskedasticity. Journal of Econometrics, 31(3), 307-327.
+* Diebold, F. X., & Mariano, R. S. (1995). Comparing Predictive Accuracy. Journal of Business & Economic Statistics, 13(3), 253-263.
+* Andersen, T. G., Bollerslev, T., Diebold, F. X., & Labys, P. (2003). Modeling and Forecasting Realized Volatility. Econometrica, 71(2), 579-625.
+* Hansen, P. R., & Lunde, A. (2005). A Forecast Comparison of Volatility Models: Does Anything Beat a GARCH(1,1)? Journal of Applied Econometrics, 20(7), 873-889.
+* Corsi, F. (2009). A Simple Approximate Long-Memory Model of Realized Volatility. Journal of Financial Econometrics, 7(2), 174-196.
+* Hyndman, R. J., & Koehler, A. B. (2006). Another Look at Measures of Forecast Accuracy. International Journal of Forecasting, 22(4), 679-688.
+
+LIMITATIONS AND FUTURE WORK
+============================================================
+* ARIMA models the conditional MEAN; volatility clustering is a conditional-VARIANCE effect, captured only indirectly via an RV proxy.
+* Residuals are heteroskedastic and heavy-tailed, violating ARIMA's assumptions.
+* Overlapping windows inject artificial autocorrelation, flattering the naive benchmark.
+* ARIMA is linear/symmetric and cannot capture the leverage effect.
+* Future work: GARCH/EGARCH/GJR-GARCH ('rugarch'), HAR-RV ('HARModel'), stochastic volatility, ML models.
